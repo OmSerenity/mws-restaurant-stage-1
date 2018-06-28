@@ -1,16 +1,19 @@
-let restaurants,
-  neighborhoods,
-  cuisines
-var newMap
-var markers = []
+let restaurants, neighborhoods, cuisines;
+var newMap;
+var markers = [];
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', event => {
   initMap(); // added 
   fetchNeighborhoods();
   fetchCuisines();
+ // registerServiceWorker();
+ // openDatabase();
+ // setTimeout(() => {
+ //   lazyLoad();
+ // }, 5000);
 });
 
 /**
@@ -78,7 +81,7 @@ initMap = () => {
         scrollWheelZoom: false
       });
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-    mapboxToken: '<your MAPBOX API KEY HERE>',
+    mapboxToken: 'pk.eyJ1IjoiZGFuY2luZ3R1cnRsZSIsImEiOiJjamliNDM0dnkxYXhxM3BtbDBqaXFrNWphIn0.sS69z6zHNOrDVlgdx70DWg',
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
       '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -155,13 +158,15 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  */
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
+  li.classList.add('restaurant');
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.alt = restaurant.name + " Restaurant";
   li.append(image);
 
-  const name = document.createElement('h1');
+  const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
   li.append(name);
 
@@ -175,6 +180,7 @@ createRestaurantHTML = (restaurant) => {
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
+  more.setAttribute('aria-label', `Click for more information about ${restaurant.name}.`);
   more.href = DBHelper.urlForRestaurant(restaurant);
   li.append(more)
 
@@ -204,4 +210,15 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     self.markers.push(marker);
   });
 } */
-
+if (navigator.serviceWorker) {
+  navigator.serviceWorker.register('/sw.js')
+    .then(() => console.log('ServiceWorker is working'))
+};
+/*
+.catch(function(err) {
+                        console.error(err);
+                    })
+        else {
+            console.log("The browser does not support Service Worker");
+        }
+        */
