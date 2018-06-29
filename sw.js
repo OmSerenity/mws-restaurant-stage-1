@@ -23,7 +23,7 @@ const filesToCache = [
 ];
 
 /* Create cache & add files.*/
-self.addEventListener('install', function(event) {
+self.addEventListener('install', event => {
     console.log('Service worker is now installing');
     event.waitUntil(
         caches.open(cacheName)

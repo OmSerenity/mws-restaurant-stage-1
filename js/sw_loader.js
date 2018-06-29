@@ -7,11 +7,10 @@ if ('serviceWorker' in navigator) {
       console.log('Service Worker is now registered');
     });
 }
-    /*
-    .catch(function(err) {
+  /*  .catch(function(err) {
                         console.error(err);
                     })
-        } else {
+        else {
             console.log("The browser does not support Service Worker");
         }
 */

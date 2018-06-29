@@ -214,11 +214,10 @@ if (navigator.serviceWorker) {
   navigator.serviceWorker.register('/sw.js')
     .then(() => console.log('ServiceWorker is working'))
 };
-/*
-.catch(function(err) {
+ /*   .catch(function(err) {
                         console.error(err);
                     })
         else {
             console.log("The browser does not support Service Worker");
         }
-        */
+  */      
